@@ -759,10 +759,15 @@ async def botoes(update: Update, context):
         )
         return
 
+    # CORRECAO DO BOTAO CONTRATAR AGORA
     if escolha.startswith("contratar_"):
-        codigo = escolha[9:]
+        codigo = escolha.removeprefix("contratar_")
 
         if codigo not in PLANOS:
+            await q.message.reply_text(
+                "Plano invalido. Escolha novamente.",
+                reply_markup=menu_planos()
+            )
             return
 
         token = criar_intencao(uid, codigo)
